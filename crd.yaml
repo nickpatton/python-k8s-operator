@@ -1,0 +1,61 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: cryptovaluecalculators.crypto.tools
+spec:
+  scope: Namespaced
+  group: crypto.tools
+  names:
+    kind: CryptoValueCalculator
+    plural: cryptovaluecalculators
+    singular: cryptovaluecalculator
+    shortNames:
+      - cvc
+      - cvcs
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              x-kubernetes-preserve-unknown-fields: true
+              properties:
+                coin:
+                  type: string
+                  description: The specific crypto coin.
+                  enum:
+                  - bitcoin
+                  - ethereum
+                  - dogecoin
+                  - shiba-inu
+                amount:
+                  type: number
+                  description: The amount of specified crypto currency.
+              required:
+               - coin
+               - amount
+            status:
+              type: object
+              x-kubernetes-preserve-unknown-fields: true
+          required:
+            - spec
+      additionalPrinterColumns:
+        - name: Coin
+          type: string
+          priority: 0
+          jsonPath: .spec.coin
+          description: The specific crypto coin.
+        - name: Amount
+          type: number
+          priority: 0
+          jsonPath: .spec.amount
+          description: The amount of specified crypto currency.
+        - name: Value
+          type: string
+          priority: 0
+          jsonPath: .metadata.annotations.value
+          description: The current value of specified crypto currency based on given amount and market value in USD.

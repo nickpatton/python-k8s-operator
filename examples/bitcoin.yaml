@@ -1,0 +1,7 @@
+apiVersion: crypto.tools/v1
+kind: CryptoValueCalculator
+metadata:
+  name: bitcoin-stash
+spec:
+  coin: bitcoin
+  amount: 0.0023

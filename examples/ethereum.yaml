@@ -1,0 +1,7 @@
+apiVersion: crypto.tools/v1
+kind: CryptoValueCalculator
+metadata:
+  name: lump-of-ethereum
+spec:
+  coin: ethereum
+  amount: 1.47
